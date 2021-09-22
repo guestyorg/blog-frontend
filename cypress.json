@@ -1,0 +1,18 @@
+{
+  "projectId": "qkh83o",
+  "defaultCommandTimeout": 10000,
+  "pageLoadTimeout": 60000,
+  "requestTimeout": 10000,
+  "responseTimeout": 30000,
+  "viewportWidth": 1280,
+  "viewportHeight": 720,
+  "retries": { "runMode": 2, "openMode": 0 },
+  "numTestsKeptInMemory": 1,
+  "chromeWebSecurity": false,
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "junit-results/result-[hash].xml",
+    "toConsole": true
+  },
+  "baseUrl": "http://localhost:3000"
+}

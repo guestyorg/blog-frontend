@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.0530" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-08-31T19:44:44" tests="0" file="cypress/integration/1-getting-started/todo.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="example to-do app" timestamp="2021-08-31T19:44:44" tests="3" time="1.9570" failures="0">
+    <testcase name="example to-do app displays two todo items by default" time="1.0070" classname="displays two todo items by default">
+    </testcase>
+    <testcase name="example to-do app can add new todo items" time="0.5170" classname="can add new todo items">
+    </testcase>
+    <testcase name="example to-do app can check off an item as completed" time="0.4330" classname="can check off an item as completed">
+    </testcase>
+  </testsuite>
+  <testsuite name="with a checked task" timestamp="2021-08-31T19:44:48" tests="3" time="1.0960" failures="0">
+    <testcase name="example to-do app with a checked task can filter for uncompleted tasks" time="0.3580" classname="can filter for uncompleted tasks">
+    </testcase>
+    <testcase name="example to-do app with a checked task can filter for completed tasks" time="0.3700" classname="can filter for completed tasks">
+    </testcase>
+    <testcase name="example to-do app with a checked task can delete all completed tasks" time="0.3680" classname="can delete all completed tasks">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,28 @@
+/*
+
+Optional objects to add in manifest:
+  1. Routes
+  2. Navigation
+  3. Feature toggle
+  4. Nginx location object
+  5. Roles
+
+  for further reading:
+
+  https://github.com/guestyorg/ebisu
+
+*/
+
+{
+  "owners": "<< Your GITHUB Team >>",
+  "name": "<< Your app name >>",
+  "microApp": {
+    "project": "<< Usually: layout-page >>",
+    "path": "<< Your application url to be seen in the main address bar >>",
+    "iframeSrc": "<< Your iframe src source >>"
+  },
+  "nginx": {
+    "server_name": "<< The domain name - Usually: app.guesty.com >>",
+    "location": "<< Nginx location entry - Usually: /apps/<app-name> >>"
+  }
+}

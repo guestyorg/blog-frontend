@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.2530" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-08-31T19:46:55" tests="0" file="cypress/integration/2-advanced-examples/navigation.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Navigation" timestamp="2021-08-31T19:46:55" tests="3" time="3.2530" failures="0">
+    <testcase name="Navigation cy.go() - go back or forward in the browser&apos;s history" time="1.7890" classname="cy.go() - go back or forward in the browser&apos;s history">
+    </testcase>
+    <testcase name="Navigation cy.reload() - reload the page" time="0.7580" classname="cy.reload() - reload the page">
+    </testcase>
+    <testcase name="Navigation cy.visit() - visit a remote url" time="0.7060" classname="cy.visit() - visit a remote url">
+    </testcase>
+  </testsuite>
+</testsuites>

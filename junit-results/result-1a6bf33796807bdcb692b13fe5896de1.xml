@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.9690" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-08-31T19:46:26" tests="0" file="cypress/integration/2-advanced-examples/local_storage.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Local Storage" timestamp="2021-08-31T19:46:26" tests="1" time="0.9690" failures="0">
+    <testcase name="Local Storage cy.clearLocalStorage() - clear all data in local storage" time="0.9690" classname="cy.clearLocalStorage() - clear all data in local storage">
+    </testcase>
+  </testsuite>
+</testsuites>
