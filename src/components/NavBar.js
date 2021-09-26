@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import createStyles from "@guestyci/foundation/createStyles";
@@ -8,7 +8,12 @@ import Section from "@guestyci/foundation/Layout/Section";
 import { Tabs, Tab } from "@guestyci/history/NavTabs";
 import { NavLink } from "react-router-dom";
 import { signout } from "../actions/accountActions";
-import { signoutUser, signoutUserPreprod } from "../actions/userActions";
+import {
+  detailsUser,
+  signoutUser,
+  signoutUserPreprod,
+} from "../actions/userActions";
+import { USER_DETAILS_RESET } from "../constants/userConstants";
 
 const useStyles = createStyles(
   (theme) => ({
@@ -52,6 +57,16 @@ const NavBar = () => {
   } = userData;
   console.log("userData:", userData);
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, error: errorUserDetails, user } = userDetails;
+
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -61,6 +76,26 @@ const NavBar = () => {
     color: "red",
     textDecoration: "none",
   };
+
+  const [firstName, setFirstName] = useState();
+
+  useEffect(() => {
+    if (userInfo) {
+      console.log(
+        "🚀 ~ file: NavBar.js ~ line 84 ~ useEffect ~ userInfo",
+        userInfo
+      );
+      setFirstName(userInfo.firstName);
+    }
+    console.log("successUpdatedd////*****************");
+  }, [userInfo, successUpdate]);
+
+  function handleSignOut() {
+    console.log('handleSignOut')
+    dispatch(signoutUser());
+    dispatch(signout());
+    dispatch({ type: USER_DETAILS_RESET });
+  }
   return (
     <>
       {accountData && userInfoData && (
@@ -70,6 +105,10 @@ const NavBar = () => {
           </NavLink>
 
           {/* {accountData && (
+      console.log("🚀 ~ file: NavBar.js ~ line 95 ~ useEffect ~ detailsUser", detailsUser)
+      console.log("🚀 ~ file: NavBar.js ~ line 95 ~ useEffect ~ detailsUser", detailsUser)
+      console.log("🚀 ~ file: NavBar.js ~ line 95 ~ useEffect ~ detailsUser", detailsUser)
+      console.log("🚀 ~ file: NavBar.js ~ line 95 ~ useEffect ~ detailsUser", detailsUser)
             <NavLink
               style={{ marginLeft: "20px" }}
               to={`/account/info/${accountData._id}`}
@@ -210,10 +249,10 @@ const NavBar = () => {
                 activeStyle={activeStyle}
                 exact
               >
-                user:{userInfo.firstName}
+                user:{firstName}
               </NavLink>
               <div
-                onClick={() => dispatch(signoutUser())}
+                onClick={handleSignOut}
                 activeStyle={activeStyle}
                 style={{ marginLeft: "20px" }}
                 exact

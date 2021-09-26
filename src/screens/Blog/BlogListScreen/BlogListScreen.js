@@ -231,7 +231,7 @@ export default function BlogListScreen(props) {
 
           {view === "account" && (
             <Table
-              multiselect
+              // multiselect
               height={500}
               data={blogs}
               // isLoading={isLoading}

@@ -301,9 +301,9 @@ export const register =
 
 export const signin = (email, accountId) => async (dispatch) => {
   // console.log("accountId:", accountId);
-  dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, accountId } });
+  dispatch({ type: USER_SIGNIN_REQUEST, payload: { email } });
   try {
-    const { data } = await userApi.post("/signin", { email, accountId });
+    const { data } = await userApi.post("/signin", { email });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     // dispatch(emailUser(email));
 
@@ -365,10 +365,12 @@ export const detailsUser = (userId) => async (dispatch) => {
 export const updateUser = (user) => async (dispatch) => {
   console.log("updateUser");
   dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
+
   try {
     console.log("user:", user);
     const { data } = await userApi.patch(`/${user.userId}`, user);
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+    dispatch(signin(user.email));
   } catch (error) {
     const message =
       error.response && error.response.data.message

@@ -130,7 +130,7 @@ export function makeDataForTable(data) {
 
         let accountObj = {};
 
-        accountObj.children = arrData[j][1].accountId.name;
+        accountObj.children = arrData[j][1].accountId ? arrData[j][1].accountId.name: "";
 
         bigObj["account"] = accountObj;
 

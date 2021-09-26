@@ -63,9 +63,13 @@ export const listBlogs = (view) => async (dispatch, getState) => {
   const {
     accountSignin: { accountInfo },
   } = getState();
+
+  const {
+    userSignin: { userInfo },
+  } = getState();
   try {
     // console.log('accountInfo:', accountInfo,view)
-    const { data } = await blogApi.post("/", { accountInfo, view });
+    const { data } = await blogApi.post("/", { accountInfo,userInfo, view });
 
     // const temp = Resource.create('tasks');
     // temp.api.defaults.baseURL = `http://localhost:9999/tasks`;

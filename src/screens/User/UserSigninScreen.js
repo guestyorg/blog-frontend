@@ -124,7 +124,7 @@ export default function UserSigninScreen(props) {
     }
     console.log("onSubmit");
 
-    dispatch(signin(email, accountId));
+    dispatch(signin(email));
 
     // console.log(password);
 

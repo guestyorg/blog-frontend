@@ -98,7 +98,7 @@ export const signout = () => (dispatch) => {
 
   dispatch({ type: ACCOUNT_SIGNOUT });
 
-  dispatch({ type: USER_SIGNOUT });
+  // dispatch({ type: USER_SIGNOUT });
 
   // document.location.href = "/signin";
 };

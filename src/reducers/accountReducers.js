@@ -43,6 +43,7 @@ export const accountRegisterReducer = (state = {}, action) => {
 };
 
 export const accountSigninReducer = (state = {}, action) => {
+  // console.log('accountSigninReducer:', accountSigninReducer)
   switch (action.type) {
     case ACCOUNT_SIGNIN_REQUEST:
       return { loading: true };
