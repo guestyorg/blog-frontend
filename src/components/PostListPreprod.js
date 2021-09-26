@@ -105,7 +105,6 @@ export default function PostList(props) {
     console.log("data:", data);
     // console.log('selection:', selection);
     setRowSelection(selection);
-
   };
 
   const deletePostHandler = async (postId) => {
@@ -117,7 +116,7 @@ export default function PostList(props) {
       // addToast.success('post was delete')
       // props.history.push('/');
 
-      dispatch(deletePostPreprod(postId, blogData._id));
+      dispatch(deletePostPreprod(blogData._id, postId));
 
       setPostDeleted(true);
 

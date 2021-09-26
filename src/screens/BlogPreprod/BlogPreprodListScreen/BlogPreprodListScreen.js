@@ -93,15 +93,20 @@ export default function BlogListPreprodScreen(props) {
 
   useEffect(() => {
     if (errorDelete) {
+      addToast.danger("error deleting the blog, only blog admin can delete the blog");
+
       dispatch({
         type: BLOG_DELETE_RESET,
       });
+    } else if (successDelete) {
+      addToast.success("blog was delete");
+      dispatch({ type: BLOG_DELETE_RESET });
     }
     dispatch(listBlogsPreprod(view));
     // dispatch({
     //   type: BLOG_DETAILS_RESET,
     // });
-  }, [dispatch, successDelete, view]);
+  }, [dispatch, successDelete, errorDelete, view]);
 
   // const deleteHandler = (blog) => {
   //   console.log("blog:", blog);
@@ -147,11 +152,12 @@ export default function BlogListPreprodScreen(props) {
     } catch (error) {
       console.log("error:", error);
       addToast.danger("error deleting the blog");
-      // dispatch({
-      //   type: BLOG_DELETE_RESET,
-      // });
     }
   };
+  // useEffect(() => {
+  //   dispatch({ type: POST_DELETE_RESET });
+  //   dispatch({ type: BLOG_DELETE_RESET });
+  // }, []);
 
   const handleDelete = () => {
     console.log("rowSelection.items: ", rowSelection.items);

@@ -133,8 +133,8 @@ export default function PostPreprodViewScreen(props) {
 
           {post &&
             blog &&
-            (post.userPreprodId === blog.userPreprodId ||
-              blog.userPreprodId === userInfoData.userId) && (
+            (blog.userPreprodId === userInfoData.userId||
+              post.userPreprodId === userInfoData.userId) && (
               <NavLink
                 to={`/blog/edit/${blogId}/post/${postId}/preprod`}
                 // activeStyle={activeStyle}

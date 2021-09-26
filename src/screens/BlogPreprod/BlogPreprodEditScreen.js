@@ -116,19 +116,19 @@ export default function BlogPreprodEditScreen(props) {
 
   useEffect(() => {
     if (successDelete) {
-      dispatch({ type: BLOG_DELETE_RESET });
-      dispatch({ type: BLOG_DETAILS_RESET });
       props.history.push("/blog/preprod/list");
       addToast.success(`the blog ${title} was delete`);
+      dispatch({ type: BLOG_DELETE_RESET });
+      dispatch({ type: BLOG_DETAILS_RESET });
     } else if (errorDelete) {
       addToast.danger("error edit the blog");
+      dispatch({ type: BLOG_DELETE_RESET });
     }
     if (successUpdate) {
-      dispatch({ type: BLOG_UPDATE_RESET });
-      dispatch({ type: BLOG_DETAILS_RESET });
-
       // props.history.push("/blog/list");
       addToast.success(`the blog ${title} was edit`);
+      dispatch({ type: BLOG_UPDATE_RESET });
+      dispatch({ type: BLOG_DETAILS_RESET });
     } else if (errorUpdate) {
       addToast.danger("error edit the blog");
     }
@@ -139,11 +139,12 @@ export default function BlogPreprodEditScreen(props) {
     }
 
     if (successPostDelete) {
-      dispatch({ type: POST_DELETE_RESET });
       // props.history.push("/blog/list");
       addToast.success(`the post  was delete`);
+      dispatch({ type: POST_DELETE_RESET });
     } else if (errorPostDelete) {
       addToast.danger("error delete the post");
+      dispatch({ type: POST_DELETE_RESET });
     }
   }, [
     dispatch,
@@ -158,6 +159,8 @@ export default function BlogPreprodEditScreen(props) {
 
   useEffect(() => {
     dispatch({ type: BLOG_DETAILS_RESET });
+    dispatch({ type: POST_DELETE_RESET });
+    dispatch({ type: BLOG_DELETE_RESET });
   }, []);
 
   const onSubmit = (e) => {

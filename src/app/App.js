@@ -138,12 +138,12 @@ const App = () => {
 
           <PrivateRoute path="/user/list" component={UserListScreen} exact />
 
-          <Route path="/user/edit/:id" component={UserEditScreen} exact />
+          <PrivateRoute path="/user/edit/:id" component={UserEditScreen} exact />
 
-          <Route path="/user/edit/:id/preprod" component={UserEditPreprodScreen} exact />
+          <PrivateRoute path="/user/edit/:id/preprod" component={UserEditPreprodScreen} exact />
 
 
-          <Route path="/user/info/:id" component={UserInfoScreen} exact />
+          <PrivateRoute path="/user/info/:id" component={UserInfoScreen} exact />
 
           <PrivateRoute path="/user/add" component={UserAddScreen} exact />
 

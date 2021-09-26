@@ -47,7 +47,6 @@ export default function PostPreprodAddScreen(props) {
   const classes = useStyles();
   const { addToast } = useToast();
 
-
   const { id: blogId } = useParams();
   // console.log("blogId:", blogId);
 
@@ -80,6 +79,7 @@ export default function PostPreprodAddScreen(props) {
       dispatch({ type: POST_ADD_RESET });
     } else if (errorAdd) {
       addToast.danger("error adding the post");
+      dispatch({ type: POST_ADD_RESET });
 
       setError(true);
     }
@@ -174,7 +174,7 @@ export default function PostPreprodAddScreen(props) {
                 style={{ marginLeft: "20px" }}
                 exact
               >
-                back to the blog 
+                back to the blog
               </NavLink>
             </Form>
           )}
