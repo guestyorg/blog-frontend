@@ -110,6 +110,7 @@ import {
   userAddReducer,
   userSigninReducer,
   userUpdateReducer,
+  userDataReducer,
 } from "./reducers/userReducers";
 
 import {
@@ -120,10 +121,12 @@ import {
   blogListReducer,
   blogRegisterReducer,
   blogAddReducer,
+  blogPreprodAddReducer,
+
   postAddReducer,
   blogSigninReducer,
   blogUpdateReducer,
-  postUpdateReducer
+  postUpdateReducer,
 } from "./reducers/blogReducers";
 
 const initialState = {
@@ -135,6 +138,15 @@ const initialState = {
   userSignin: {
     userInfo: localStorage.getItem("userInfo")
       ? JSON.parse(localStorage.getItem("userInfo"))
+      : null,
+  },
+
+  userData: {
+    userInfoData: localStorage.getItem("userInfoData")
+      ? JSON.parse(localStorage.getItem("userInfoData"))
+      : null,
+      accountData: localStorage.getItem("accountData")
+      ? JSON.parse(localStorage.getItem("accountData"))
       : null,
   },
 };
@@ -149,10 +161,13 @@ const tempReducer = (state = {}, action) => {
 };
 // shape the state structure
 const rootReducer = combineReducers({
+  userData: userDataReducer,
+
   userRegister: userRegisterReducer,
 
   userAdd: userAddReducer,
 
+  
   userSignin: userSigninReducer,
 
   userDetails: userDetailsReducer,
@@ -164,6 +179,8 @@ const rootReducer = combineReducers({
   blogRegister: blogRegisterReducer,
 
   blogAdd: blogAddReducer,
+  
+  blogPreprodAdd:blogPreprodAddReducer,
 
   postAdd: postAddReducer,
 
@@ -175,9 +192,7 @@ const rootReducer = combineReducers({
 
   blogUpdate: blogUpdateReducer,
 
-
   postUpdate: postUpdateReducer,
-
 
   blogList: blogListReducer,
   blogDelete: blogDeleteReducer,

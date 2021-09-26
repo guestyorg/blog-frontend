@@ -1,4 +1,5 @@
 import Axios from "axios";
+
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -12,6 +13,10 @@ import {
   USER_SIGNIN_FAIL,
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
+  USER_DATA_FAIL,
+  USER_DATA_REQUEST,
+  USER_DATA_SUCCESS,
+  USER_PREPROD_SIGNOUT,
   USER_SIGNOUT,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
@@ -31,6 +36,8 @@ import { makeDataForTable, prices, ratings } from "../utils";
 import Resource from "@guestyci/agni";
 // const { api, env, config } = Resource.create();
 const temp = Resource.create("user");
+const { api, env, config } = Resource.create();
+
 temp.api.defaults.baseURL = `http://localhost:9999/api/users`;
 
 //http://localhost:9999/blog-hydra/api/users
@@ -71,6 +78,52 @@ export const listUsers = (view) => async (dispatch, getState) => {
   }
 };
 
+export const getUserData = () => async (dispatch) => {
+  // console.log("accountId:", accountId);
+  dispatch({ type: USER_DATA_REQUEST });
+  try {
+    const { data } = await userApi.get("/data");
+
+    const { data: userInfoData } = data;
+    // console.log('userInfoData:', userInfoData)
+
+    async function getAccountData() {
+      const { data: accountData } = await api.get("/accounts/me"); // will go to `${config.MAILER_URL}/users`
+      dispatch({
+        type: USER_DATA_SUCCESS,
+        payload: { userInfoData, accountData },
+      });
+
+      localStorage.setItem("accountData", JSON.stringify(accountData));
+
+      localStorage.setItem("userInfoData", JSON.stringify(userInfoData));
+    }
+
+    getAccountData();
+
+    // dispatch(emailUser(email));
+  } catch (error) {
+    // console.log("error :", error);
+    dispatch({
+      type: USER_DATA_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const signoutUserPreprod = () => (dispatch) => {
+  localStorage.removeItem("userInfoData");
+  localStorage.removeItem("accountData");
+  // localStorage.removeItem("userInfo");
+
+  dispatch({ type: USER_PREPROD_SIGNOUT });
+  // document.location.href = "/";
+};
+
+//////////////////////////////////old///////////////////////////////////////////////
 // /////////////////////// listUser ideal ///////////////
 
 // export const listUsers = () => async (dispatch) => {
@@ -214,8 +267,6 @@ export const register =
       payload: { firstName, lastName, email, accountId },
     });
     try {
-
-      
       // const { data } = await userApi.post("/register", {
       //   firstName,
       //   lastName,
@@ -223,13 +274,15 @@ export const register =
       //   accountId,
       // });
 
-      const { data } = await await Axios.post("http://localhost:9999/api/users/register", {
-        firstName,
-        lastName,
-        email,
-        accountId,
-      });
-
+      const { data } = await await Axios.post(
+        "http://localhost:9999/api/users/register",
+        {
+          firstName,
+          lastName,
+          email,
+          accountId,
+        }
+      );
 
       dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 
@@ -269,7 +322,8 @@ export const signin = (email, accountId) => async (dispatch) => {
 
 export const signoutUser = () => (dispatch) => {
   localStorage.removeItem("userInfo");
-
+  localStorage.removeItem("userInfoData");
+  localStorage.removeItem("accountData");
   dispatch({ type: USER_SIGNOUT });
   // document.location.href = "/signin";
 };

@@ -8,7 +8,7 @@ import Section from "@guestyci/foundation/Layout/Section";
 import { Tabs, Tab } from "@guestyci/history/NavTabs";
 import { NavLink } from "react-router-dom";
 import { signout } from "../actions/accountActions";
-import { signoutUser } from "../actions/userActions";
+import { signoutUser, signoutUserPreprod } from "../actions/userActions";
 
 const useStyles = createStyles(
   (theme) => ({
@@ -43,6 +43,15 @@ const NavBar = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const userData = useSelector((state) => state.userData);
+  const {
+    userInfoData,
+    accountData,
+    loading: loadingUserData,
+    error: errorUserData,
+  } = userData;
+  console.log("userData:", userData);
+
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -53,98 +62,71 @@ const NavBar = () => {
     textDecoration: "none",
   };
   return (
-    <Section className={classes.root}>
-      <NavLink to="/" activeStyle={activeStyle} exact>
-        Home
-      </NavLink>
-
-      {accountInfo && (
-        <NavLink
-          style={{ marginLeft: "20px" }}
-          to={`/account/info/${accountInfo._id}`}
-          activeStyle={activeStyle}
-          exact
-        >
-          account: {accountInfo.name}
-        </NavLink>
-      )}
-
-      {accountInfo && (
-        <>
-          <div
-            onClick={() => dispatch(signout())}
-            activeStyle={activeStyle}
-            style={{ marginLeft: "20px" }}
-            exact
-          >
-            sign out account
-          </div>
-        </>
-      )}
-
-      {userInfo && !accountInfo && (
-        <NavLink
-          to="/account/signin"
-          activeStyle={activeStyle}
-          style={{ marginLeft: "20px" }}
-          exact
-        >
-          sign in account
-        </NavLink>
-      )}
-
-      {userInfo ? (
-        <>
-          <NavLink
-            style={{ marginLeft: "20px" }}
-            to={`/user/info/${userInfo._id}`}
-            activeStyle={activeStyle}
-            exact
-          >
-            user:{userInfo.firstName}
+    <>
+      {accountData && userInfoData && (
+        <Section className={classes.root}>
+          <NavLink to="/" activeStyle={activeStyle} exact>
+            Home
           </NavLink>
+
+          {/* {accountData && (
+            <NavLink
+              style={{ marginLeft: "20px" }}
+              to={`/account/info/${accountData._id}`}
+              activeStyle={activeStyle}
+              exact
+            >
+              account: {accountData.name}
+            </NavLink>
+          )} */}
+
+          {accountData && (
+            <div style={{ marginLeft: "20px" }} activeStyle={activeStyle}>
+              account: {accountData.name}
+            </div>
+          )}
+
+          {userInfoData && (
+            <NavLink
+              style={{ marginLeft: "20px" }}
+              to={`/user/edit/${userInfoData.userId}/preprod`}
+              activeStyle={activeStyle}
+              exact
+            >
+              user:{userInfoData.fullName}
+            </NavLink>
+          )}
           <div
-            onClick={() => dispatch(signoutUser())}
+            onClick={() => dispatch(signoutUserPreprod())}
             activeStyle={activeStyle}
             style={{ marginLeft: "20px" }}
             exact
           >
             sign out user
           </div>
-        </>
-      ) : (
-        <NavLink
-          to="/user/signin"
-          activeStyle={activeStyle}
-          style={{ marginLeft: "20px" }}
-          exact
-        >
-          signin user
-        </NavLink>
-      )}
 
-      {accountInfo && userInfo && (
-        <>
-          {" "}
-          <NavLink
-            to="/user/list"
-            activeStyle={activeStyle}
-            style={{ marginLeft: "20px" }}
-            exact
-          >
-            User List
-          </NavLink>
-          <NavLink
-            to="/blog/list"
-            activeStyle={activeStyle}
-            style={{ marginLeft: "20px" }}
-            exact
-          >
-            Blog List
-          </NavLink>
-        </>
-      )}
-      {/* <NavLink
+          {userInfoData && (
+            <>
+              {" "}
+              <NavLink
+                to="/preprod/table"
+                activeStyle={activeStyle}
+                style={{ marginLeft: "20px" }}
+                exact
+              >
+                User List
+              </NavLink>
+              <NavLink
+                to="/blog/preprod/list"
+                activeStyle={activeStyle}
+                style={{ marginLeft: "20px" }}
+                exact
+              >
+                Blog List
+              </NavLink>
+            </>
+          )}
+          {/* <NavLink
         to="/blog/list"
         activeStyle={activeStyle}
         style={{ marginLeft: "20px" }}
@@ -153,16 +135,7 @@ const NavBar = () => {
         Account Blogs
       </NavLink> */}
 
-      <NavLink
-        to="/preprod/table"
-        activeStyle={activeStyle}
-        style={{ marginLeft: "20px" }}
-        exact
-      >
-        Prepord Table
-      </NavLink>
-
-      {/* <Tabs
+          {/* <Tabs
           noAnimate
           noBorderBottom
           exact={false}
@@ -173,7 +146,6 @@ const NavBar = () => {
               key={`/`}
             >
 
-              
         users Table
             </Tab>
             <Tab
@@ -182,11 +154,149 @@ const NavBar = () => {
               key={`/user/add`}
             >
         Add New User
-            </Tab>     
-       
+            </Tab>
+
         </Tabs>
     */}
-    </Section>
+        </Section>
+      )}
+      {/* ///////////////////////////////////////////////////////// */}
+      {!accountData && !userInfoData && (
+        <Section className={classes.root}>
+          <NavLink to="/" activeStyle={activeStyle} exact>
+            Home
+          </NavLink>
+
+          {accountInfo && (
+            <NavLink
+              style={{ marginLeft: "20px" }}
+              to={`/account/info/${accountInfo._id}`}
+              activeStyle={activeStyle}
+              exact
+            >
+              account: {accountInfo.name}
+            </NavLink>
+          )}
+
+          {accountInfo && (
+            <>
+              <div
+                onClick={() => dispatch(signout())}
+                activeStyle={activeStyle}
+                style={{ marginLeft: "20px" }}
+                exact
+              >
+                sign out account
+              </div>
+            </>
+          )}
+
+          {userInfo && !accountInfo && (
+            <NavLink
+              to="/account/signin"
+              activeStyle={activeStyle}
+              style={{ marginLeft: "20px" }}
+              exact
+            >
+              sign in account
+            </NavLink>
+          )}
+
+          {userInfo ? (
+            <>
+              <NavLink
+                style={{ marginLeft: "20px" }}
+                to={`/user/info/${userInfo._id}`}
+                activeStyle={activeStyle}
+                exact
+              >
+                user:{userInfo.firstName}
+              </NavLink>
+              <div
+                onClick={() => dispatch(signoutUser())}
+                activeStyle={activeStyle}
+                style={{ marginLeft: "20px" }}
+                exact
+              >
+                sign out user
+              </div>
+            </>
+          ) : (
+            <NavLink
+              to="/user/signin"
+              activeStyle={activeStyle}
+              style={{ marginLeft: "20px" }}
+              exact
+            >
+              signin user
+            </NavLink>
+          )}
+
+          {accountInfo && userInfo && (
+            <>
+              {" "}
+              <NavLink
+                to="/user/list"
+                activeStyle={activeStyle}
+                style={{ marginLeft: "20px" }}
+                exact
+              >
+                User List
+              </NavLink>
+              <NavLink
+                to="/blog/list"
+                activeStyle={activeStyle}
+                style={{ marginLeft: "20px" }}
+                exact
+              >
+                Blog List
+              </NavLink>
+            </>
+          )}
+          {/* <NavLink
+        to="/blog/list"
+        activeStyle={activeStyle}
+        style={{ marginLeft: "20px" }}
+        exact
+      >
+        Account Blogs
+      </NavLink> */}
+
+          <NavLink
+            to="/preprod/table"
+            activeStyle={activeStyle}
+            style={{ marginLeft: "20px" }}
+            exact
+          >
+            Prepord Table
+          </NavLink>
+
+          {/* <Tabs
+          noAnimate
+          noBorderBottom
+          exact={false}
+        >
+            <Tab
+              to="/"
+              value={{path: '/', label: 'usersTable', src: '/'}}
+              key={`/`}
+            >
+
+        users Table
+            </Tab>
+            <Tab
+              to={"/user/add"}
+              value={{path: '/user/add', label: 'userAdd', src: '/user/add'}}
+              key={`/user/add`}
+            >
+        Add New User
+            </Tab>
+
+        </Tabs>
+    */}
+        </Section>
+      )}
+    </>
   );
 };
 

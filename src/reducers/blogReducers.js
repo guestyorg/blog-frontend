@@ -7,22 +7,14 @@ import {
   POST_DELETE_REQUEST,
   POST_DELETE_RESET,
   POST_DELETE_SUCCESS,
-
   BLOG_DETAILS_FAIL,
   BLOG_DETAILS_REQUEST,
   BLOG_DETAILS_RESET,
   BLOG_DETAILS_SUCCESS,
-
-
-  
   POST_DETAILS_FAIL,
   POST_DETAILS_REQUEST,
   POST_DETAILS_RESET,
   POST_DETAILS_SUCCESS,
-  
-
-
-
   BLOG_LIST_FAIL,
   BLOG_LIST_REQUEST,
   BLOG_LIST_SUCCESS,
@@ -33,14 +25,14 @@ import {
   BLOG_ADD_REQUEST,
   BLOG_ADD_SUCCESS,
   BLOG_ADD_RESET,
-
-  //////
+  BLOG_ADD_PREPROD_FAIL,
+  BLOG_ADD_PREPROD_REQUEST,
+  BLOG_ADD_PREPROD_SUCCESS,
+  BLOG_ADD_PREPROD_RESET,
   POST_ADD_FAIL,
   POST_ADD_REQUEST,
   POST_ADD_SUCCESS,
   POST_ADD_RESET,
-
-  
   BLOG_SIGNIN_FAIL,
   BLOG_SIGNIN_REQUEST,
   BLOG_SIGNIN_SUCCESS,
@@ -51,13 +43,10 @@ import {
   BLOG_UPDATE_RESET,
   BLOG_UPDATE_SUCCESS,
   /////
-
   POST_UPDATE_FAIL,
   POST_UPDATE_REQUEST,
   POST_UPDATE_RESET,
   POST_UPDATE_SUCCESS,
-
-
 } from "../constants/blogConstants";
 
 export const blogAddReducer = (state = {}, action) => {
@@ -74,6 +63,22 @@ export const blogAddReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const blogPreprodAddReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BLOG_ADD_PREPROD_REQUEST:
+      return { loading: true };
+    case BLOG_ADD_PREPROD_SUCCESS:
+      return { loading: false, blogInfo: action.payload };
+    case BLOG_ADD_PREPROD_FAIL:
+      return { loading: false, error: action.payload };
+    case BLOG_ADD_PREPROD_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
 //////
 export const postAddReducer = (state = {}, action) => {
   switch (action.type) {
@@ -133,8 +138,6 @@ export const blogDetailsReducer = (state = { loading: true }, action) => {
   }
 };
 
-
-
 ////////
 export const postDetailsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
@@ -150,8 +153,6 @@ export const postDetailsReducer = (state = { loading: true }, action) => {
       return state;
   }
 };
-
-
 
 /////
 
@@ -169,8 +170,6 @@ export const blogUpdateReducer = (state = {}, action) => {
       return state;
   }
 };
-
-
 
 ///////
 export const postUpdateReducer = (state = {}, action) => {
@@ -220,7 +219,7 @@ export const blogDeleteReducer = (state = {}, action) => {
 export const postDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case POST_DELETE_REQUEST:
-      return { loading: true };
+      return { loading: true};
     case POST_DELETE_SUCCESS:
       return { loading: false, success: true };
     case POST_DELETE_FAIL:
@@ -231,6 +230,5 @@ export const postDeleteReducer = (state = {}, action) => {
       return state;
   }
 };
-
 
 /////////

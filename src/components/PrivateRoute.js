@@ -8,14 +8,21 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 
   const accountSignin = useSelector((state) => state.accountSignin);
   const { accountInfo } = accountSignin;
+
+
+  const userData = useSelector((state) => state.userData);
+  const { userInfoData } = userData;
+
+
+
   return (
     <Route
       {...rest}
       render={(props) =>
-        userInfo && accountInfo ? (
+        userInfo && accountInfo ||userInfoData  ? (
           <Component {...props} ></Component>
         ) : (
-          <Redirect to="/account/signin" />
+          <Redirect to="/user/signin" />
         )
       }
     ></Route>

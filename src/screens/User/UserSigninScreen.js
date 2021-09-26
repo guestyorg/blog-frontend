@@ -32,7 +32,11 @@ import createStyles from "@guestyci/foundation/createStyles";
 import ErrorBanner from "@guestyci/foundation/legacy/Table/ErrorBanner";
 
 import { useToast } from "@guestyci/foundation/Toast";
-import { signin } from "../../actions/userActions";
+import { getUserData, signin } from "../../actions/userActions";
+
+
+import Spinner from "@guestyci/foundation/Spinner";
+
 
 const useStyles = createStyles((theme) => ({
   app: {
@@ -66,13 +70,29 @@ export default function UserSigninScreen(props) {
 
   ///selectors
 
+  // const userData = useSelector((state) => state.userData);
+  // const {
+  //   data,
+  //   loading: loadingUserData,
+  //   error: errorUserData,
+  // } = userData;
+  // // console.log("userData:", userData);
+
   const userSignin = useSelector((state) => state.userSignin);
   const {
     userInfo: userInfoSignIn,
     loading: loadingSignIn,
     error: errorSignIn,
   } = userSignin;
-  // console.log("userSignin:", userSignin);
+
+  const userData = useSelector((state) => state.userData);
+
+  const {
+    accountData,
+    userInfoData,
+    loading: loadingUserData,
+    error: errorUserData,
+  } = userData;
 
   const accountSignin = useSelector((state) => state.accountSignin);
   const { accountInfo } = accountSignin;
@@ -80,15 +100,15 @@ export default function UserSigninScreen(props) {
   /// effects
 
   useEffect(() => {
-    if (userInfoSignIn) {
+    if (userInfoSignIn || userInfoData) {
       addToast.success(`you sign in successfully`);
       props.history.push("/");
-    } else if (errorSignIn) {
+    } else if (errorSignIn || errorUserData) {
       addToast.danger("error signin");
 
       setError(true);
     }
-  }, [props.history, userInfoSignIn, errorSignIn]);
+  }, [props.history, userInfoSignIn, errorSignIn, userInfoData]);
 
   //dispatchers
 
@@ -143,6 +163,10 @@ export default function UserSigninScreen(props) {
   const closeError = () => {
     setError(false);
   };
+
+  function handlePrepordSignin() {
+    dispatch(getUserData());
+  }
 
   return (
     <Section className={classes.app} justify="center">
@@ -252,14 +276,18 @@ export default function UserSigninScreen(props) {
                   </FormField> */}
                 <RaisedButton type="submit">Signin User</RaisedButton>
 
-                {errorSignIn && (
-                  <ErrorBanner
-                    show={error}
-                    errorMessage={errorMessage}
-                    onClick={closeError}
-                    actionText="Try again"
-                  />
-                )}
+
+                {loadingSignIn  || loadingUserData  && <Spinner size={80} strokeWidth={6} />}
+
+                {errorSignIn ||
+                  (errorUserData && (
+                    <ErrorBanner
+                      show={error}
+                      errorMessage={errorMessage}
+                      onClick={closeError}
+                      actionText="Try again"
+                    />
+                  ))}
               </FormGroup>
 
               <NavLink
@@ -273,6 +301,9 @@ export default function UserSigninScreen(props) {
             </Form>
           )}
         />
+        <RaisedButton type="submit" onClick={handlePrepordSignin}>
+          Signin Prepord User
+        </RaisedButton>
       </Col>
     </Section>
   );

@@ -25,6 +25,10 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_RESET,
   USER_UPDATE_SUCCESS,
+  USER_DATA_FAIL,
+  USER_DATA_REQUEST,
+  USER_DATA_SUCCESS,
+  USER_PREPROD_SIGNOUT,
 } from "../constants/userConstants";
 
 export const userAddReducer = (state = {}, action) => {
@@ -64,6 +68,25 @@ export const userSigninReducer = (state = {}, action) => {
     case USER_SIGNIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_SIGNOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const userDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_DATA_REQUEST:
+      return { loading: true };
+    case USER_DATA_SUCCESS:
+      return {
+        loading: false,
+        userInfoData: action.payload.userInfoData,
+        accountData: action.payload.accountData,
+      };
+    case USER_DATA_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_PREPROD_SIGNOUT:
       return {};
     default:
       return state;
