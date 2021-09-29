@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteBlogPreprod,
   listBlogsPreprod,
-} from "../../../actions/blogActions";
+} from "../../../actions/blogPreprodActions";
 import {
   BLOG_DELETE_RESET,
   BLOG_DETAILS_RESET,

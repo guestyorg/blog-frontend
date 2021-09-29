@@ -35,7 +35,7 @@ import Icon from "@guestyci/foundation/Icon";
 import Spinner from "@guestyci/foundation/Spinner";
 import StatusIndication from "@guestyci/foundation/StatusIndication";
 import { NavLink } from "react-router-dom";
-import { deletePostPreprod } from "../actions/blogActions";
+import { deletePostPreprod } from "../actions/blogPreprodActions";
 import { POST_DELETE_RESET } from "../constants/blogConstants";
 
 import { useToast } from "@guestyci/foundation/Toast";

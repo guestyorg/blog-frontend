@@ -32,21 +32,22 @@ temp.api.defaults.baseURL = `http://localhost:9999/api/accounts`;
 const accountApi = temp.api;
 
 export const register =
-  (name, email, creatorName, creatorEmail, userId) => async (dispatch) => {
+  (name, email, creatorName, creatorEmail, userId, createAccount) =>
+  async (dispatch) => {
     dispatch({
       type: ACCOUNT_REGISTER_REQUEST,
       payload: { name, email, creatorName, creatorEmail, userId },
     });
     try {
-      const { data } = await accountApi.post("/register", {
+      const { data } = await Axios.post("http://localhost:9999/api/accounts/register", {
         name,
         email,
         creatorName,
         creatorEmail,
       });
-      console.log("data:================", data);
+      // console.log("data:================", data);
 
-      let accountId= data._id;
+      let accountId = data._id;
       // const { data } = await accountApi.post(
       //   "/register",
       //   {
@@ -54,7 +55,7 @@ export const register =
       //     email,
       //   }
       // );
-      dispatch(updateUser({ userId, accountId }));
+      dispatch(updateUser({ userId, accountId, createAccount }));
 
       dispatch({ type: ACCOUNT_REGISTER_SUCCESS, payload: data });
 
@@ -72,10 +73,12 @@ export const register =
     }
   };
 
-export const signin = (email) => async (dispatch) => {
-  dispatch({ type: ACCOUNT_SIGNIN_REQUEST, payload: { email } });
+export const signin = (email, accountId) => async (dispatch) => {
+  dispatch({ type: ACCOUNT_SIGNIN_REQUEST, payload: { email, accountId } });
   try {
-    const { data } = await accountApi.post("/signin", { email });
+    // const { data } = await accountApi.post("/signin", { email, accountId });
+    const { data } = await Axios.post("http://localhost:9999/api/accounts/signin", { email, accountId });
+
     dispatch({ type: ACCOUNT_SIGNIN_SUCCESS, payload: data });
     // dispatch(emailAccount(email));
 

@@ -33,6 +33,7 @@ import ErrorBanner from "@guestyci/foundation/legacy/Table/ErrorBanner";
 
 import { useToast } from "@guestyci/foundation/Toast";
 import { signin } from "../../actions/accountActions";
+import { ACCOUNT_SIGNOUT } from "../../constants/accountConstants";
 
 const useStyles = createStyles((theme) => ({
   app: {
@@ -72,18 +73,30 @@ export default function AccountSigninScreen(props) {
   } = accountSignin;
   // console.log("accountSignin:", accountSignin);
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const {
+    userInfo: userInfoSignIn,
+    loading: loadingUserSignIn,
+    error: errorUserSignIn,
+  } = userSignin;
+
+  // userSignin &&
+  //   console.log(
+  //     "🚀 ~ file: AccountSigninScreen.js ~ line 81 ~ AccountSigninScreen ~ userInfoSignIn",
+  //     userInfoSignIn
+  //   );
   /// effects
 
   useEffect(() => {
     if (accountInfoSignIn) {
-      addToast.success(`account ${name} was add successfully`);
+      addToast.success(`account ${accountInfoSignIn.name} was add successfully`);
       props.history.push("/");
     } else if (errorSignIn) {
       addToast.danger("error signin the user");
-
+      dispatch({ type: ACCOUNT_SIGNOUT });
       setError(true);
     }
-  }, [props.history, accountInfoSignIn]);
+  }, [props.history, accountInfoSignIn, userInfoSignIn, errorSignIn,errorUserSignIn]);
 
   //dispatchers
 
@@ -96,7 +109,7 @@ export default function AccountSigninScreen(props) {
     // console.log(name);
     // console.log(email);
 
-    dispatch(signin(email));
+    dispatch(signin(email, userInfoSignIn.accountId));
 
     // console.log(password);
 

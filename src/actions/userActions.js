@@ -34,6 +34,7 @@ import {
 import { makeDataForTable, prices, ratings } from "../utils";
 
 import Resource from "@guestyci/agni";
+import { signout } from "./accountActions";
 // const { api, env, config } = Resource.create();
 const temp = Resource.create("user");
 const { api, env, config } = Resource.create();
@@ -303,7 +304,7 @@ export const signin = (email, accountId) => async (dispatch) => {
   // console.log("accountId:", accountId);
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email } });
   try {
-    const { data } = await userApi.post("/signin", { email });
+    const { data } = await Axios.post("http://localhost:9999/api/users/signin", { email });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     // dispatch(emailUser(email));
 
@@ -328,15 +329,25 @@ export const signoutUser = () => (dispatch) => {
   // document.location.href = "/signin";
 };
 
-export const deleteUser = (userId) => async (dispatch) => {
-  console.log("userId:", userId);
+export const deleteUser = (userId) => async (dispatch, getState) => {
+  // console.log("userId:", userId);
   console.log("deleteUser");
   dispatch({ type: USER_DELETE_REQUEST, payload: userId });
 
   try {
     const { data } = await userApi.delete(`/${userId}`);
-    console.log("data:", data);
+    // console.log("data:", data);
     dispatch({ type: USER_DELETE_SUCCESS, payload: data });
+
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
+    if (userInfo && userInfo._id === userId) {
+      dispatch(signoutUser());
+      dispatch(signout());
+
+    }
   } catch (error) {
     console.log("error");
     const message =
@@ -368,9 +379,13 @@ export const updateUser = (user) => async (dispatch) => {
 
   try {
     console.log("user:", user);
-    const { data } = await userApi.patch(`/${user.userId}`, user);
+    // const { data } = await userApi.patch(`/${user.userId}`, user);
+    const { data } = await Axios.patch(`http://localhost:9999/api/users/${user.userId}`, user);
+
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
-    dispatch(signin(user.email));
+    if (!user.createAccount) {
+      dispatch(signin(user.email));
+    }
   } catch (error) {
     const message =
       error.response && error.response.data.message

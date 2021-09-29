@@ -90,12 +90,12 @@ export default function AccountAddScreen(props) {
     loading: loadingUserSignIn,
     error: errorUserSignIn,
   } = userSignin;
-  console.log("userSignin:", userSignin);
+  // console.log("userSignin:", userSignin);
 
   let userId = "";
   if (userInfo) {
     userId = userInfo._id;
-    console.log("userId:", userId);
+    // console.log("userId:", userId);
   }
 
   /// effects
@@ -118,11 +118,11 @@ export default function AccountAddScreen(props) {
 
   let userInfoEmail = "";
   if (userInfo) {
-    console.log('userInfo:', userInfo)
+    // console.log('userInfo:', userInfo)
     userInfoFirstName = userInfo.firstName;
-    console.log('userInfoFirstName:', userInfoFirstName)
+    // console.log('userInfoFirstName:', userInfoFirstName)
     userInfoEmail = userInfo.email;
-    console.log('userInfoEmail:', userInfoEmail)
+    // console.log('userInfoEmail:', userInfoEmail)
   }
 
   const onSubmit = (e) => {
@@ -131,8 +131,17 @@ export default function AccountAddScreen(props) {
     console.log("onSubmit");
     // console.log(name);
     // console.log(email);
-
-    dispatch(register(name, email, userInfoFirstName, userInfoEmail, userId));
+    let createAccount = true;
+    dispatch(
+      register(
+        name,
+        email,
+        userInfoFirstName,
+        userInfoEmail,
+        userId,
+        createAccount
+      )
+    );
     // dispatch(updateUser({ id, accountId }));
 
     // console.log(password);

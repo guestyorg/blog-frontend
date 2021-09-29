@@ -139,7 +139,7 @@ export default function PostList(props) {
       // addToast.success('post was delete')
       // props.history.push('/');
 
-      dispatch(deletePost(postId, blogData._id));
+      dispatch(deletePost(blogData._id, postId));
 
       setPostDeleted(true);
 

@@ -95,9 +95,9 @@ export default function UserListScreen(props) {
   //     : items.size;
 
   const selectionSize =
-    view === "account" && allSelected && data && data.length > 0 && items
-      ? items.size
-      : 0;
+    view === "account" && allSelected && data && data.length > 0
+      ? data && data.length - exceptItems.size
+      : items.size;
 
   const handleRowCheckChange = (action) => {
     console.log("handleRowCheckChange");
@@ -185,7 +185,7 @@ export default function UserListScreen(props) {
                 {`Unselect ${selectionSize || ""}`}
               </FlatButton>
 
-              {selectionSize > 0 && (
+              {selectionSize && selectionSize > 0 && (
                 <>
                   <FlatButton type="error" onClick={handleDelete}>
                     <Row align="center" spacing={2}>
@@ -234,7 +234,7 @@ export default function UserListScreen(props) {
                 <HeaderCell id="id">Id</HeaderCell>
                 <Cell />
               </Column> */}
-              <Column dataKey="firstName" width={width} >
+              <Column dataKey="firstName" width={width}>
                 <HeaderCell id="firstname">First name</HeaderCell>
                 <Cell />
               </Column>

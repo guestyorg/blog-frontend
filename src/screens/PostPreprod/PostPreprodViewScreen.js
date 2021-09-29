@@ -41,7 +41,7 @@ import {
   detailsPreprodPost,
   detailsPreprodBlog,
   updatePost,
-} from "../../actions/blogActions";
+} from "../../actions/blogPreprodActions";
 import {
   POST_DELETE_RESET,
   POST_DETAILS_RESET,

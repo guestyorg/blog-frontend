@@ -32,7 +32,7 @@ import createStyles from "@guestyci/foundation/createStyles";
 import ErrorBanner from "@guestyci/foundation/legacy/Table/ErrorBanner";
 
 import { useToast } from "@guestyci/foundation/Toast";
-import { addBlogPreprod } from "../../actions/blogActions";
+import { addBlogPreprod } from "../../actions/blogPreprodActions";
 import { BLOG_ADD_PREPROD_RESET } from "../../constants/blogConstants";
 
 const useStyles = createStyles((theme) => ({

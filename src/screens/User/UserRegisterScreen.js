@@ -85,7 +85,7 @@ export default function UserRegisterScreen(props) {
   if (accountSignin && accountInfo) {
     accountId = accountInfo._id;
   }
-  console.log("accountId:", accountId);
+  // console.log("accountId:", accountId);
 
   // const { _id:accountId } = accountInfo;
   // console.log('accountId:', accountId)

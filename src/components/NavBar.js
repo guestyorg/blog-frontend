@@ -220,7 +220,7 @@ const NavBar = () => {
           {accountInfo && (
             <>
               <div
-                onClick={() => dispatch(signout())}
+                onClick={handleSignOut}
                 activeStyle={activeStyle}
                 style={{ marginLeft: "20px" }}
                 exact
@@ -271,7 +271,7 @@ const NavBar = () => {
             </NavLink>
           )}
 
-          {accountInfo && userInfo && (
+          { userInfo && (
             <>
               {" "}
               <NavLink

@@ -36,7 +36,7 @@ import { ReactComponent as BtnTrash } from "@guestyci/foundation/icons/BtnTrash.
 import Icon from "@guestyci/foundation/Icon";
 
 import { useToast } from "@guestyci/foundation/Toast";
-import { deletePostPreprod, detailsPreprodPost, updatePostPreprod } from "../../actions/blogActions";
+import { deletePostPreprod, detailsPreprodPost, updatePostPreprod } from "../../actions/blogPreprodActions";
 import {
   POST_DELETE_RESET,
   POST_DETAILS_RESET,

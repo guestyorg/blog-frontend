@@ -40,7 +40,7 @@ import {
   deleteBlogPreprod,
   detailsPreprodBlog,
   updateBlogPreprod,
-} from "../../actions/blogActions";
+} from "../../actions/blogPreprodActions";
 import {
   BLOG_DELETE_RESET,
   BLOG_DETAILS_RESET,
