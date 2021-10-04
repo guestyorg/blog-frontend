@@ -263,6 +263,7 @@ export const add =
 
 export const register =
   (firstName, lastName, email, accountId) => async (dispatch) => {
+    // debugger;
     dispatch({
       type: USER_REGISTER_REQUEST,
       payload: { firstName, lastName, email, accountId },
@@ -304,7 +305,10 @@ export const signin = (email, accountId) => async (dispatch) => {
   // console.log("accountId:", accountId);
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email } });
   try {
-    const { data } = await Axios.post("http://localhost:9999/api/users/signin", { email });
+    const { data } = await Axios.post(
+      "http://localhost:9999/api/users/signin",
+      { email }
+    );
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     // dispatch(emailUser(email));
 
@@ -346,7 +350,6 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
     if (userInfo && userInfo._id === userId) {
       dispatch(signoutUser());
       dispatch(signout());
-
     }
   } catch (error) {
     console.log("error");
@@ -380,7 +383,10 @@ export const updateUser = (user) => async (dispatch) => {
   try {
     console.log("user:", user);
     // const { data } = await userApi.patch(`/${user.userId}`, user);
-    const { data } = await Axios.patch(`http://localhost:9999/api/users/${user.userId}`, user);
+    const { data } = await Axios.patch(
+      `http://localhost:9999/api/users/${user.userId}`,
+      user
+    );
 
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
     if (!user.createAccount) {
